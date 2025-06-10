@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -11,27 +12,47 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
-
-
   @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
   }
 
-  void _sendResetLink() {
+  void _sendResetLink() async {
     if (_formKey.currentState?.validate() ?? false) {
-      String email = _emailController.text;
-      // ignore: avoid_print
-      print('Sending password reset link to: $email');
-      // Simular envio de link
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Link de redefinição enviado para $email (simulação)'),
-        ),
-      );
-      // Poderia navegar de volta para Login ou mostrar uma mensagem de sucesso
-      Navigator.pop(context); // Volta para a tela anterior (LoginScreen)
+      String email = _emailController.text.trim();
+
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Link de redefinição enviado para $email! Verifique sua caixa de entrada.',
+            ),
+          ),
+        );
+        Navigator.pop(context); // Volta para a tela de login
+      } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
+        String mensagem = '';
+        if (e.code == 'user-not-found') {
+          mensagem = 'Nenhum usuário encontrado para esse email.';
+        } else if (e.code == 'invalid-email') {
+          mensagem = 'Email inválido.';
+        } else {
+          mensagem = 'Erro: ${e.message}';
+        }
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(mensagem)));
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro inesperado. Tente novamente.')),
+        );
+      }
     }
   }
 
@@ -39,7 +60,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     final textScaler = MediaQuery.textScaleFactorOf(context);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAF9),
       body: Stack(
@@ -156,7 +177,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor, insira seu email';
                               }
-                              if (!value.contains('@') || !value.contains('.')) {
+                              if (!value.contains('@') ||
+                                  !value.contains('.')) {
                                 return 'Por favor, insira um email válido';
                               }
                               return null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:leitor_acessivel/screens/forgot_password_screen.dart';
 import 'package:leitor_acessivel/screens/sign_up_screen.dart';
 
@@ -30,15 +31,39 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState?.validate() ?? false) {
-      String email = _emailController.text;
-      String password = _passwordController.text;
-      // ignore: avoid_print
-      print('Login attempt with Email: $email, Password: $password');
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Tentando login com $email...')));
+      String email = _emailController.text.trim();
+      String password = _passwordController.text.trim();
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login realizado com sucesso!')),
+        );
+        Navigator.pushReplacementNamed(context, '/leitor');
+      } on FirebaseAuthException catch (e) {
+        String mensagem = '';
+        if (e.code == 'usuário não encontrado') {
+          mensagem = 'Usuário não encontrado.';
+        } else if (e.code == 'senha errada') {
+          mensagem = 'Senha incorreta.';
+        } else if (e.code == 'credencial-inválida') {
+          mensagem = 'Usuário ou senha inválida.';
+        } else {
+          mensagem = 'Erro: ${e.message}';
+        }
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(mensagem)));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro inesperado. Tente novamente.')),
+        );
+      }
     }
   }
 

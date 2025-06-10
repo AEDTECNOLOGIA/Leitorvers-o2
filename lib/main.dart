@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // ADICIONADO!
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
@@ -7,7 +8,10 @@ import 'screens/user_type_selection_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/reader_screen.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -36,7 +40,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      // Configuração para melhorar o desempenho
       initialRoute: '/splash',
       routes: {
         '/': (context) => const LoginScreen(userType: 'responsável'),
@@ -44,14 +47,16 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(userType: 'responsável'),
         '/signup': (context) => const SignUpScreen(),
         '/forgot_password': (context) => const ForgotPasswordScreen(),
-        '/user_type_selection': (context) => const UserTypeSelectionScreen(userType: 'default'),
+        '/user_type_selection': (context) =>
+            const UserTypeSelectionScreen(userType: 'default'),
         '/reader': (context) => const ReaderScreen(),
       },
       debugShowCheckedModeBanner: false,
-      // Configuração para melhorar o desempenho
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(1.0)),
           child: child!,
         );
       },

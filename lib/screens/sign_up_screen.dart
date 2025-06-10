@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,8 +20,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // ignore: unused_field, prefer_final_fields
   bool _obscureConfirmPassword = true;
 
-
-
   @override
   void dispose() {
     _nameController.dispose();
@@ -29,20 +29,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  // ignore: unused_element
-  void _signUp() {
+  void _signUp() async {
     if (_formKey.currentState?.validate() ?? false) {
-      String name = _nameController.text;
-      String email = _emailController.text;
-      String school = _schoolController.text;
-      // ignore: avoid_print
-      print('Attempting to sign up with Name: $name, Email: $email, School: $school');
-      
-      // Simulate account creation
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Account created for $name successfully! (simulation)')),
-      );
-      Navigator.pop(context);
+      String name = _nameController.text.trim();
+      String email = _emailController.text.trim();
+      String password = _passwordController.text.trim();
+      String school = _schoolController.text.trim();
+
+      try {
+        // Cria usuário no Firebase Auth
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+
+        // Salva nome e escola no Firestore
+        await FirebaseFirestore.instance
+            .collection('usuarios')
+            .doc(userCredential.user!.uid)
+            .set({'nome': name, 'email': email, 'escola': school});
+
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Conta criada com sucesso para $name!')),
+        );
+        Navigator.pop(context); // Volta para tela de login
+      } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
+        String mensagem = '';
+        if (e.code == 'email-already-in-use') {
+          mensagem = 'Este email já está em uso.';
+        } else if (e.code == 'invalid-email') {
+          mensagem = 'Email inválido.';
+        } else if (e.code == 'weak-password') {
+          mensagem = 'A senha é muito fraca.';
+        } else {
+          mensagem = 'Erro: ${e.message}';
+        }
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(mensagem)));
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro inesperado. Tente novamente.')),
+        );
+      }
     }
   }
 
@@ -50,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     final textScaler = MediaQuery.textScaleFactorOf(context);
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAF9),
       body: Stack(
@@ -175,7 +205,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor, insira seu email';
                               }
-                              if (!value.contains('@') || !value.contains('.')) {
+                              if (!value.contains('@') ||
+                                  !value.contains('.')) {
                                 return 'Por favor, insira um email válido';
                               }
                               return null;
@@ -206,8 +237,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               prefixIcon: const Icon(Icons.lock_outline),
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
-                                icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined),
-                                onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                ),
+                                onPressed: () => setState(
+                                  () => _obscurePassword = !_obscurePassword,
+                                ),
                               ),
                             ),
                             obscureText: _obscurePassword,
@@ -230,8 +267,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               prefixIcon: const Icon(Icons.lock_outline),
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
-                                icon: Icon(_obscureConfirmPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined),
-                                onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                                icon: Icon(
+                                  _obscureConfirmPassword
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                ),
+                                onPressed: () => setState(
+                                  () => _obscureConfirmPassword =
+                                      !_obscureConfirmPassword,
+                                ),
                               ),
                             ),
                             obscureText: _obscureConfirmPassword,

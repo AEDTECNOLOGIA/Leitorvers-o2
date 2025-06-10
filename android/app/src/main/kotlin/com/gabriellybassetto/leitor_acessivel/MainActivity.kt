@@ -1,4 +1,4 @@
-package com.example.leitor_acessivel
+package com.gabriellybassetto.leitor_acessivel
 
 import io.flutter.embedding.android.FlutterActivity
 
