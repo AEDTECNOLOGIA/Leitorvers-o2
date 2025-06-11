@@ -256,6 +256,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.1"
+<<<<<<< HEAD
   google_identity_services_web:
     dependency: transitive
     description:
@@ -304,6 +305,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.4+4"
+=======
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
   http:
     dependency: transitive
     description:

@@ -15,9 +15,14 @@ dependencies:
   open_file: ^3.3.2
   permission_handler: ^11.0.1
   firebase_core: ^2.28.0
+<<<<<<< HEAD
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.16.0
   google_sign_in: ^6.3.0
+=======
+  firebase_auth: ^4.18.0
+  cloud_firestore: ^4.16.0
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
 
 dev_dependencies:
   flutter_test:
@@ -31,4 +36,7 @@ flutter:
     - assets/images/
     - assets/epubs/
     - assets/fonts/
+<<<<<<< HEAD
     - assets/icons/
+=======
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2

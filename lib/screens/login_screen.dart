@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:leitor_acessivel/screens/forgot_password_screen.dart';
 import 'package:leitor_acessivel/screens/sign_up_screen.dart';
+<<<<<<< HEAD
 import 'package:google_sign_in/google_sign_in.dart';
+=======
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
 
 class LoginScreen extends StatefulWidget {
   final String userType;
@@ -48,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacementNamed(context, '/leitor');
       } on FirebaseAuthException catch (e) {
         String mensagem = '';
+<<<<<<< HEAD
         if (e.code == 'user-not-found') {
           mensagem = 'Usuário não encontrado.';
         } else if (e.code == 'wrong-password') {
@@ -66,6 +70,17 @@ class _LoginScreenState extends State<LoginScreen> {
           mensagem = 'Erro: ${e.message}';
         }
 
+=======
+        if (e.code == 'usuário não encontrado') {
+          mensagem = 'Usuário não encontrado.';
+        } else if (e.code == 'senha errada') {
+          mensagem = 'Senha incorreta.';
+        } else if (e.code == 'credencial-inválida') {
+          mensagem = 'Usuário ou senha inválida.';
+        } else {
+          mensagem = 'Erro: ${e.message}';
+        }
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(mensagem)));
@@ -77,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+<<<<<<< HEAD
   Future<void> _loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -115,6 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+=======
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
   @override
   Widget build(BuildContext context) {
     final textScaler = MediaQuery.textScalerOf(context);
@@ -285,6 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
 
+<<<<<<< HEAD
                       const SizedBox(height: 12),
 
                       ElevatedButton(
@@ -319,6 +338,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
+=======
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

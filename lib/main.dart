@@ -8,6 +8,10 @@ import 'screens/user_type_selection_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/reader_screen.dart';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -48,7 +52,11 @@ class MyApp extends StatelessWidget {
         '/forgot_password': (context) => const ForgotPasswordScreen(),
         '/user_type_selection': (context) =>
             const UserTypeSelectionScreen(userType: 'default'),
+<<<<<<< HEAD
         '/leitor': (context) => const ReaderScreen(),
+=======
+        '/reader': (context) => const ReaderScreen(),
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
       },
       debugShowCheckedModeBanner: false,
       builder: (context, child) {

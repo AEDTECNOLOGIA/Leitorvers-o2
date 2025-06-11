@@ -1,17 +1,28 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "148631025420",
     "project_id": "appleitura-b719f",
     "storage_bucket": "appleitura-b719f.firebasestorage.app"
+=======
+    "project_number": "491995657172",
+    "project_id": "leitorinclusivo",
+    "storage_bucket": "leitorinclusivo.firebasestorage.app"
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:148631025420:android:1ec1284c0bd5d5a84bbb29",
+=======
+        "mobilesdk_app_id": "1:491995657172:android:9ec20b73b5452cc2ff5c41",
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
         "android_client_info": {
           "package_name": "com.gabriellybassetto.leitor_acessivel"
         }
       },
+<<<<<<< HEAD
       "oauth_client": [
         {
           "client_id": "148631025420-eu62ugrdi85ohqss4ip5dt302k6hkohr.apps.googleusercontent.com",
@@ -21,16 +32,26 @@
       "api_key": [
         {
           "current_key": "AIzaSyDBvahIQwFaaPiJ5M61V0d2xBlP686NMVY"
+=======
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKn4h_6E4TyaVzlGIJgh78QgeeIicIHl4"
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
         }
       ],
       "services": {
         "appinvite_service": {
+<<<<<<< HEAD
           "other_platform_oauth_client": [
             {
               "client_id": "148631025420-eu62ugrdi85ohqss4ip5dt302k6hkohr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+=======
+          "other_platform_oauth_client": []
+>>>>>>> 7d3cdea0458b658c32447f4485123d900f153cf2
         }
       }
     }
