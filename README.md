@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # leitor_acessivel
 
 A new Flutter project.
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# Leitorvers-o2
+>>>>>>> d24341e3085cb2b531e63e209b5c550282331a36
