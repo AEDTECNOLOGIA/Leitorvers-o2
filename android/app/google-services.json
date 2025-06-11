@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "148631025420",
+    "project_id": "appleitura-b719f",
+    "storage_bucket": "appleitura-b719f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148631025420:android:1ec1284c0bd5d5a84bbb29",
+        "android_client_info": {
+          "package_name": "com.gabriellybassetto.leitor_acessivel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148631025420-eu62ugrdi85ohqss4ip5dt302k6hkohr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBvahIQwFaaPiJ5M61V0d2xBlP686NMVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148631025420-eu62ugrdi85ohqss4ip5dt302k6hkohr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
